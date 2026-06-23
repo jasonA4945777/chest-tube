@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>密閉式胸腔引流術 · 教學與測驗</title>
+<style>
+  :root{
+    --sand:#F3ECDD;
+    --sand-2:#EAE0CC;
+    --paper:#FBF7EE;
+    --ink:#2E2A24;
+    --ink-soft:#6B6358;
+    --terra:#B65C38;
+    --terra-deep:#974726;
+    --sage:#7C8A6B;
+    --sage-deep:#5E6B50;
+    --ochre:#C79A3F;
+    --line:#D9CFB9;
+    --water:#9BBFD6;
+    --water-deep:#6FA0BE;
+    --shadow:0 8px 28px rgba(46,42,36,.10);
+    --radius:16px;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    font-family:"Microsoft JhengHei","微軟正黑體","PingFang TC","Noto Sans TC",system-ui,sans-serif;
+    background:
+      radial-gradient(1200px 500px at 80% -10%, rgba(199,154,63,.10), transparent 60%),
+      var(--sand);
+    color:var(--ink);
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:20px 18px 80px;}
+
+  /* Header */
+  header.top{
+    display:flex;gap:16px;align-items:center;
+    padding:18px 20px;margin-bottom:18px;
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+  }
+  .bottle{flex:0 0 auto;}
+  .titles h1{font-size:1.35rem;margin:0 0 2px;letter-spacing:.5px;}
+  .titles .en{color:var(--ink-soft);font-size:.82rem;letter-spacing:1px;text-transform:uppercase;}
+  .titles .meta{color:var(--ink-soft);font-size:.74rem;margin-top:4px;}
+
+  /* Nav */
+  nav{
+    display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;
+  }
+  nav button{
+    flex:1 1 auto;min-width:96px;
+    font-family:inherit;font-size:.92rem;font-weight:600;
+    padding:11px 10px;border:1px solid var(--line);
+    background:var(--paper);color:var(--ink-soft);
+    border-radius:11px;cursor:pointer;transition:.15s;
+  }
+  nav button:hover{border-color:var(--terra);color:var(--terra);}
+  nav button.active{
+    background:var(--terra);border-color:var(--terra);color:#fff;
+    box-shadow:0 4px 12px rgba(182,92,56,.28);
+  }
+  nav button:focus-visible{outline:3px solid var(--ochre);outline-offset:2px;}
+
+  /* Panels */
+  .panel{display:none;animation:fade .3s ease;}
+  .panel.show{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
+  .card{
+    background:var(--paper);border:1px solid var(--line);
+    border-radius:var(--radius);padding:20px 22px;margin-bottom:16px;
+    box-shadow:var(--shadow);
+  }
+  .card h2{
+    font-size:1.08rem;margin:0 0 14px;display:flex;align-items:center;gap:10px;
+  }
+  .card h2 .dot{
+    width:26px;height:26px;flex:0 0 auto;border-radius:50%;
+    background:var(--terra);color:#fff;display:grid;place-items:center;
+    font-size:.82rem;font-weight:700;
+  }
+  .card h2 .dot.sage{background:var(--sage);}
+  .card h2 .dot.ochre{background:var(--ochre);}
+  .card h3{font-size:.96rem;margin:16px 0 6px;color:var(--terra-deep);}
+  ul.clean{margin:0;padding-left:1.2em;}
+  ul.clean li{margin:5px 0;}
+  .note{
+    background:var(--sand-2);border-left:4px solid var(--ochre);
+    padding:10px 14px;border-radius:8px;margin:12px 0;font-size:.92rem;
+  }
+  .pill{
+    display:inline-block;background:var(--sand-2);border:1px solid var(--line);
+    border-radius:999px;padding:2px 11px;font-size:.82rem;margin:3px 4px 3px 0;
+  }
+  .lead{color:var(--ink-soft);font-size:.92rem;margin:-6px 0 16px;}
+
+  /* Quiz */
+  .qhead{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-bottom:14px;flex-wrap:wrap;gap:8px;
+  }
+  .qhead .count{font-size:.85rem;color:var(--ink-soft);}
+  .progress{height:8px;background:var(--sand-2);border-radius:999px;overflow:hidden;margin-bottom:18px;}
+  .progress span{display:block;height:100%;background:var(--sage);width:0;transition:width .35s;}
+
+  .question{margin-bottom:8px;}
+  .qnum{font-size:.78rem;font-weight:700;color:var(--terra);letter-spacing:.5px;}
+  .qtext{font-size:1.02rem;font-weight:600;margin:4px 0 14px;}
+
+  .options{display:flex;flex-direction:column;gap:9px;}
+  .opt{
+    text-align:left;font-family:inherit;font-size:.96rem;
+    padding:12px 15px;border:1.5px solid var(--line);background:var(--paper);
+    color:var(--ink);border-radius:11px;cursor:pointer;transition:.13s;
+    display:flex;gap:10px;align-items:flex-start;
+  }
+  .opt:hover:not([disabled]){border-color:var(--terra);background:#fff;}
+  .opt .mk{flex:0 0 auto;font-weight:700;color:var(--ink-soft);min-width:1.3em;}
+  .opt.correct{border-color:var(--sage);background:rgba(124,138,107,.14);}
+  .opt.correct .mk{color:var(--sage-deep);}
+  .opt.wrong{border-color:var(--terra);background:rgba(182,92,56,.12);}
+  .opt.wrong .mk{color:var(--terra-deep);}
+  .opt[disabled]{cursor:default;}
+  .opt:focus-visible{outline:3px solid var(--ochre);outline-offset:2px;}
+
+  .tf-row{display:flex;gap:12px;}
+  .tf-row .opt{flex:1;justify-content:center;font-weight:700;font-size:1.05rem;}
+
+  .feedback{
+    margin-top:14px;padding:12px 15px;border-radius:11px;font-size:.92rem;
+    display:none;
+  }
+  .feedback.show{display:block;}
+  .feedback.ok{background:rgba(124,138,107,.16);border:1px solid var(--sage);}
+  .feedback.no{background:rgba(182,92,56,.12);border:1px solid var(--terra);}
+  .feedback b{color:var(--terra-deep);}
+  .feedback.ok b{color:var(--sage-deep);}
+
+  .qnav{display:flex;gap:10px;margin-top:18px;}
+  .btn{
+    font-family:inherit;font-weight:700;font-size:.95rem;cursor:pointer;
+    padding:11px 20px;border-radius:11px;border:none;transition:.15s;
+  }
+  .btn.primary{background:var(--terra);color:#fff;flex:1;}
+  .btn.primary:hover{background:var(--terra-deep);}
+  .btn.primary:disabled{background:var(--line);color:var(--ink-soft);cursor:default;}
+  .btn.ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink-soft);}
+  .btn.ghost:hover{border-color:var(--terra);color:var(--terra);}
+  .btn:focus-visible{outline:3px solid var(--ochre);outline-offset:2px;}
+
+  /* Ordering */
+  .order-pool,.order-list{display:flex;flex-direction:column;gap:8px;margin:8px 0 16px;}
+  .order-item{
+    display:flex;gap:10px;align-items:center;text-align:left;
+    font-family:inherit;font-size:.95rem;color:var(--ink);
+    padding:11px 14px;border:1.5px solid var(--line);background:var(--paper);
+    border-radius:11px;cursor:pointer;transition:.13s;
+  }
+  .order-item:hover{border-color:var(--terra);}
+  .order-item .seq{
+    flex:0 0 auto;width:24px;height:24px;border-radius:50%;
+    background:var(--sand-2);color:var(--ink-soft);display:grid;place-items:center;
+    font-size:.8rem;font-weight:700;
+  }
+  .order-item.placed .seq{background:var(--terra);color:#fff;}
+  .order-item.correct{border-color:var(--sage);background:rgba(124,138,107,.14);}
+  .order-item.correct .seq{background:var(--sage);color:#fff;}
+  .order-item.wrong{border-color:var(--terra);background:rgba(182,92,56,.10);}
+  .order-item.wrong .seq{background:var(--terra);color:#fff;}
+  .order-item:focus-visible{outline:3px solid var(--ochre);outline-offset:2px;}
+  .hint{font-size:.82rem;color:var(--ink-soft);margin-bottom:6px;}
+
+  /* Result */
+  .result{text-align:center;padding:26px 20px;}
+  .score-ring{margin:0 auto 14px;}
+  .result h2{font-size:1.2rem;margin:6px 0;}
+  .result .big{font-size:2.6rem;font-weight:800;line-height:1;}
+  .result .grade{font-size:1rem;color:var(--ink-soft);margin-top:6px;}
+  .breakdown{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin:18px 0;}
+  .breakdown div{text-align:center;}
+  .breakdown .n{font-size:1.4rem;font-weight:800;}
+  .breakdown .l{font-size:.78rem;color:var(--ink-soft);}
+  .best{font-size:.85rem;color:var(--sage-deep);margin-top:8px;}
+
+  /* Leaderboard + form */
+  .field{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;}
+  .field input{flex:1;min-width:120px;font-family:inherit;font-size:.95rem;
+    padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;
+    background:var(--paper);color:var(--ink);}
+  .field input:focus{outline:none;border-color:var(--terra);}
+  .msg{font-size:.88rem;margin-top:8px;}
+  .msg.ok{color:var(--sage-deep);}
+  .msg.no{color:var(--terra-deep);}
+  .submitwrap{border-top:1px solid var(--line);margin-top:18px;padding-top:16px;text-align:left;}
+  .submitwrap h3{margin:0 0 10px;color:var(--terra-deep);font-size:.98rem;}
+  .lb{display:flex;flex-direction:column;gap:6px;}
+  .lb-row{display:grid;grid-template-columns:50px 1fr 1fr auto;gap:8px;align-items:center;
+    padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper);font-size:.92rem;}
+  .lb-head{background:var(--sand-2);font-weight:700;color:var(--ink-soft);font-size:.76rem;}
+  .lb-row .rk{font-weight:800;text-align:center;}
+  .lb-row .nm{font-weight:600;}
+  .lb-row .ut{color:var(--ink-soft);}
+  .lb-row .sc{font-weight:700;color:var(--terra-deep);text-align:right;white-space:nowrap;}
+  .lb-row .sc small{color:var(--ink-soft);font-weight:400;}
+  .lb-row.me{border-color:var(--sage);background:rgba(124,138,107,.12);}
+  @media(max-width:480px){
+    .lb-row{grid-template-columns:40px 1fr auto;}
+    .lb-row .ut{display:none;}
+  }
+  footer{text-align:center;color:var(--ink-soft);font-size:.74rem;margin-top:30px;line-height:1.5;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="bottle">
+      <svg width="46" height="62" viewBox="0 0 46 62" aria-hidden="true">
+        <rect x="6" y="10" width="34" height="48" rx="6" fill="#fff" stroke="var(--line)" stroke-width="2"/>
+        <rect x="6" y="34" width="34" height="24" rx="6" fill="var(--water)"/>
+        <path d="M6 34 h34" stroke="var(--water-deep)" stroke-width="1.5" opacity=".6"/>
+        <rect x="14" y="2" width="5" height="40" rx="2.5" fill="none" stroke="var(--terra)" stroke-width="2"/>
+        <rect x="27" y="2" width="5" height="16" rx="2.5" fill="none" stroke="var(--sage-deep)" stroke-width="2"/>
+        <circle cx="16.5" cy="48" r="2" fill="#fff" opacity=".8"/>
+        <circle cx="16.5" cy="42" r="1.4" fill="#fff" opacity=".6"/>
+      </svg>
+    </div>
+    <div class="titles">
+      <h1>密閉式胸腔引流術</h1>
+      <div class="en">Closed Chest Drainage</div>
+      <div class="meta">中山醫大附醫 護理部技術 A31000-Q05-W-B10　第 3.9 版　教學 × 測驗</div>
+    </div>
+  </header>
+
+  <nav id="nav">
+    <button data-tab="learn" class="active">📖 教學</button>
+    <button data-tab="tf">⭕ 是非題</button>
+    <button data-tab="mc">📝 選擇題</button>
+    <button data-tab="order">🔢 步驟排序</button>
+    <button data-tab="result">🏆 成績</button>
+    <button data-tab="rank">🥇 排行榜</button>
+  </nav>
+
+  <!-- ================= 教學 ================= -->
+  <section class="panel show" id="tab-learn">
+
+    <div class="card">
+      <h2><span class="dot">目</span>技術目的</h2>
+      <ul class="clean">
+        <li>對氣胸、血胸、水胸及開胸手術病人，經胸管將肋膜腔內氣體或液體引流出，使肺葉擴張、恢復肺泡換氣功能。</li>
+        <li>維持兩側胸腔內負壓平衡。</li>
+        <li>減輕肋膜腔內液體、血液、空氣聚積所引起的呼吸窘迫。</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2><span class="dot ochre">物</span>用物準備</h2>
+      <h3>協助胸管插入</h3>
+      <span class="pill">胸管插入包</span><span class="pill">胸管 28–36 號</span><span class="pill">胸腔引流瓶</span>
+      <span class="pill">塑膠連接管</span><span class="pill">無菌蒸餾水 1000 c.c.</span><span class="pill">止血鉗 ×2</span>
+      <span class="pill">2% Tincture-Iodine + 75% Alcohol／2% chlorhexidine</span>
+      <span class="pill">2% Xylocaine（麻醉）</span><span class="pill">10 c.c. 空針</span><span class="pill">無菌手套 ×2</span>
+      <span class="pill">Mefix／布膠</span><span class="pill">4×4 Y 型紗布</span><span class="pill">無菌洞巾／治療巾</span>
+      <span class="pill">抽吸機（醫師決定）</span><span class="pill">Monosof 3-0 縫線</span><span class="pill">優碘軟膏</span>
+      <h3>更換引流瓶</h3>
+      <span class="pill">胸腔引流瓶</span><span class="pill">無菌蒸餾水 1000 c.c.</span><span class="pill">止血鉗 ×2</span><span class="pill">Mefix／布膠</span>
+      <h3>協助拔除胸管</h3>
+      <span class="pill">消毒用物</span><span class="pill">優碘軟膏</span><span class="pill">4×4 紗布</span>
+      <span class="pill">無菌手套</span><span class="pill">Mefix</span><span class="pill">AR 包／無菌線剪</span>
+    </div>
+
+    <div class="card">
+      <h2><span class="dot sage">置</span>胸管放置 · 操作重點</h2>
+      <ul class="clean">
+        <li>核對 HIS 護理系統處方 → 辨識病人（≥2 種方法）並解釋 → 協助填妥同意書 → 洗手。</li>
+        <li>引流瓶倒入無菌蒸餾水 <b>300 c.c.</b>，使長管埋於水下 <b>2–3 公分</b>形成密閉系統，防空氣進入胸腔。</li>
+        <li>水位線貼橫膠布（日期/時間/水量）＋直膠布（刻度），便於各班追蹤。</li>
+        <li>協助病人採半坐臥式露出穿刺部位 → 協助醫師戴手套、消毒、抽麻醉藥。</li>
+        <li>醫師插管後立即接引流瓶並固定：連接處先貼直條再環貼（<b>跨橋式固定法</b>）。</li>
+        <li>觀察水柱是否隨呼吸起伏；引流端接水下，另一開口需通大氣。</li>
+        <li>床旁備止血鉗 → 觀察引流量、顏色、速度、生命徵象 → 記錄 → f/u CXR 確認位置。</li>
+      </ul>
+      <div class="note">⚠️ 引流量每小時 &gt;200 ml、或顏色改變、或出現呼吸急促/發紺/皮下氣腫，應立即通知醫師（警示氣胸、肺栓塞、心包填塞）。</div>
+    </div>
+
+    <div class="card">
+      <h2><span class="dot">換</span>更換引流瓶 · 重點</h2>
+      <ul class="clean">
+        <li>長管埋水下 2–3 公分；以 2 支止血鉗夾管（與引流管成 <b>90 度</b>）移除舊瓶。</li>
+        <li>接新瓶固定後打開止血鉗，止血鉗留床旁。</li>
+        <li>囑病人咳嗽深呼吸：吸氣時長玻管水面<b>上升</b>、呼氣下降且有氣泡。</li>
+        <li>引流瓶須低於胸腔 <b>2–3 呎（約 60–90 公分）</b>，防逆流。</li>
+        <li>更換時機：氣體 <b>7 天</b>換；渾濁或含血液 <b>3 天</b>換；液面超過 1/2–2/3 立即更換。</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2><span class="dot ochre">拔</span>協助拔除胸管 · 重點</h2>
+      <ul class="clean">
+        <li>拔管條件：不再有液體流動、肺已擴張、術後 2–3 天（24–72 小時）無特殊狀況、引流量 &lt;50 c.c./天、依醫囑。</li>
+        <li>教導病人<b>深吸氣後閉氣</b>，醫師迅速拔管、緊抽縫線、縫合，減少空氣由傷口吸入肋膜腔。</li>
+        <li>迅速以優碘軟膏紗布密蓋傷口，Mefix 固定 → 觀察呼吸 → 依醫囑 X 光確認肺擴張。</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2><span class="dot sage">注</span>注意事項</h2>
+      <ul class="clean">
+        <li>鼓勵病人深呼吸、有效咳嗽、患側擴胸運動，促進肺擴張與引流。</li>
+        <li>接頭鬆脫/瓶破時立即以止血鉗（前端橡皮或紗布包覆）夾管，但勿過久以免壓迫性氣胸。</li>
+        <li>胸管脫出立即以無菌紗布或優碘軟膏紗布覆蓋並通知醫師。</li>
+        <li>剛置入 2 小時內每半小時、24 小時內每小時檢查引流量/顏色/性質並劃記。</li>
+        <li>全肺切除術（pneumonectomy）<b>不可</b>接抽吸機；引流量太多可依醫囑用低壓抽吸。</li>
+        <li>pig-tail 軟管較舒適但固定不易、易脫落，照顧須特別小心。</li>
+        <li>下床活動時引流瓶須低於腰部，勿壓折胸管。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= 是非題 ================= -->
+  <section class="panel" id="tab-tf">
+    <div class="qhead">
+      <strong>是非題</strong><span class="count" id="tf-count"></span>
+    </div>
+    <div class="progress"><span id="tf-bar"></span></div>
+    <div class="card" id="tf-card"></div>
+  </section>
+
+  <!-- ================= 選擇題 ================= -->
+  <section class="panel" id="tab-mc">
+    <div class="qhead">
+      <strong>選擇題</strong><span class="count" id="mc-count"></span>
+    </div>
+    <div class="progress"><span id="mc-bar"></span></div>
+    <div class="card" id="mc-card"></div>
+  </section>
+
+  <!-- ================= 步驟排序 ================= -->
+  <section class="panel" id="tab-order">
+    <div class="qhead">
+      <strong>更換引流瓶 · 步驟排序</strong>
+    </div>
+    <div class="card" id="order-card"></div>
+  </section>
+
+  <!-- ================= 成績 ================= -->
+  <section class="panel" id="tab-result">
+    <div class="card result" id="result-card"></div>
+  </section>
+
+  <!-- ================= 排行榜 ================= -->
+  <section class="panel" id="tab-rank">
+    <div class="card" id="rank-card"></div>
+  </section>
+
+  <footer>
+    依《密閉式胸腔引流術》技術標準 A31000-Q05-W-B10（第 3.9 版）製作 · 僅供教學練習<br>
+    版權內容為中山醫學大學附設醫院所有
+  </footer>
+</div>
+
+<!-- Firebase（雲端排行榜，沿用 nursework 專案）-->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script>
+/* =================================================================
+   ★ Firebase 設定 ★
+   把 nursework 專案的 firebaseConfig 整段貼到下面（覆蓋這些佔位字）。
+   貼好後重新整理頁面即可啟用單位排行榜；未填則排行榜功能自動隱藏。
+   ================================================================= */
+const firebaseConfig = {
+  apiKey: "AIzaSyA1sA1BVVahQpaTGo5iE7_zzFg00-G2RFU",
+  authDomain: "nurse-work.firebaseapp.com",
+  projectId: "nurse-work",
+  storageBucket: "nurse-work.firebasestorage.app",
+  messagingSenderId: "567633609866",
+  appId: "1:567633609866:web:507df36bbce06970625973",
+  measurementId: "G-WZGEEH69E0"
+};
+const SCORE_COLLECTION = "chest_drain_scores"; // Firestore 集合名稱（可自訂）
+
+let db = null, fbReady = false;
+function fbConfigured(){ return firebaseConfig.apiKey && firebaseConfig.apiKey.indexOf("貼上") === -1; }
+(function initFirebase(){
+  if(!fbConfigured()) return;
+  try{ firebase.initializeApp(firebaseConfig); db = firebase.firestore(); fbReady = true; }
+  catch(e){ console.warn("Firebase 初始化失敗：", e); fbReady = false; }
+})();
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+/* ============ 題庫 ============ */
+const TF = [
+  {q:"胸腔引流瓶長管須埋於無菌蒸餾水下 2–3 公分，以形成密閉系統避免空氣進入胸腔。", a:true,
+   e:"正確。長管埋於水下形成密閉系統（水封），可防止空氣經引流管進入胸腔。"},
+  {q:"為利於引流，胸腔引流瓶應放置於高於胸腔的位置。", a:false,
+   e:"錯誤。引流瓶須低於胸腔 2–3 呎（約 60–90 公分），以避免引流液逆流回肋膜腔。"},
+  {q:"當每小時引流量大於 200 ml 或顏色改變時，應立即通知醫師處理。", a:true,
+   e:"正確。引流量每小時 >200 ml、突然大量或顏色改變，須通知醫師。"},
+  {q:"病人吸氣時，水封瓶內長玻璃管的水面會下降。", a:false,
+   e:"錯誤。吸氣時水面上升，呼氣時下降且有氣泡。"},
+  {q:"拔除胸管時，應教導病人深吸一口氣後閉氣，再由醫師迅速拔除。", a:true,
+   e:"正確。深吸氣後閉氣可減少空氣由傷口吸入肋膜腔。"}
+];
+
+const MC = [
+  {q:"協助胸管插入時，胸管的常用號數為？",
+   o:["24–26 號","28–36 號","38–40 號","16–18 號"], a:1,
+   e:"胸管使用 28–36 號。"},
+  {q:"打開無菌引流瓶時，應倒入無菌蒸餾水多少 c.c. 使長管埋於水下？",
+   o:["100 c.c.","200 c.c.","300 c.c.","500 c.c."], a:2,
+   e:"倒入無菌蒸餾水 300 c.c.，使長管埋於水下 2–3 公分。"},
+  {q:"胸腔引流瓶應保持低於胸腔約多少距離？",
+   o:["1 呎","2–3 呎（約 60–90 公分）","4 呎","越低越好、無上限"], a:1,
+   e:"引流瓶須低於胸腔 2–3 呎（約 60–90 公分），防逆流。"},
+  {q:"連接處布膠固定先貼直條、再環貼，此固定法稱為？",
+   o:["十字固定法","跨橋式固定法","螺旋固定法","8 字固定法"], a:1,
+   e:"先貼直條再環貼，稱跨橋式固定法。"},
+  {q:"若胸管不慎脫出，應立即如何處理？",
+   o:["直接重新插回","以無菌紗布或優碘軟膏紗布覆蓋並通知醫師","僅用手按住傷口","等醫師到場前不做任何處理"], a:1,
+   e:"立即以無菌紗布或優碘軟膏紗布覆蓋傷口，再通知醫師。"}
+];
+
+const ORDER = [
+  "辨識病人（≥2 種方法）並向病人及家屬解釋",
+  "洗手、備妥用物推至病人單位",
+  "倒入無菌蒸餾水使長管埋於水下 2–3 公分、栓緊瓶蓋並標示水位線",
+  "以 2 支止血鉗（成 90 度）夾緊胸管延長管，移除舊引流瓶",
+  "將胸管接上新引流瓶開口，以布膠或束帶固定",
+  "打開止血鉗，囑病人咳嗽及深呼吸，觀察水柱水面移動",
+  "利用擠壓法（滾輪鉗 Milking）保持引流管暢通",
+  "以固定夾固定引流管，引流瓶置於安全處並低於胸腔 2–3 呎（60–90 公分）"
+];
+
+/* ============ 狀態 ============ */
+const state = {
+  tf:{i:0, ans:Array(TF.length).fill(null)},
+  mc:{i:0, ans:Array(MC.length).fill(null)},
+  order:{placed:[], checked:false, correct:0}
+};
+
+/* ============ 導覽 ============ */
+const nav = document.getElementById('nav');
+nav.addEventListener('click', e=>{
+  const b = e.target.closest('button'); if(!b) return;
+  document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  const tab = b.dataset.tab;
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('show'));
+  document.getElementById('tab-'+tab).classList.add('show');
+  if(tab==='result') renderResult();
+  if(tab==='rank') renderLeaderboard();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+/* ============ 是非題 ============ */
+function renderTF(){
+  const i = state.tf.i, item = TF[i];
+  document.getElementById('tf-count').textContent = `第 ${i+1} / ${TF.length} 題`;
+  document.getElementById('tf-bar').style.width = ((i)/TF.length*100)+'%';
+  const chosen = state.tf.ans[i];
+  const answered = chosen!==null;
+  let html = `<div class="question"><div class="qnum">是非 ${i+1}</div><div class="qtext">${item.q}</div></div>`;
+  html += `<div class="options tf-row">`;
+  [{v:true,l:"⭕ 是 (O)"},{v:false,l:"❌ 非 (X)"}].forEach(opt=>{
+    let cls='opt';
+    if(answered){
+      if(opt.v===item.a) cls+=' correct';
+      else if(opt.v===chosen) cls+=' wrong';
+    }
+    html += `<button class="${cls}" ${answered?'disabled':''} onclick="answerTF(${opt.v})">${opt.l}</button>`;
+  });
+  html += `</div>`;
+  if(answered){
+    const ok = chosen===item.a;
+    html += `<div class="feedback show ${ok?'ok':'no'}"><b>${ok?'答對了！':'再想想'}</b>　${item.e}</div>`;
+  }
+  html += `<div class="qnav">
+    <button class="btn ghost" onclick="moveTF(-1)" ${i===0?'disabled':''}>上一題</button>
+    <button class="btn primary" onclick="moveTF(1)">${i===TF.length-1?'完成是非 → 進入選擇題':'下一題'}</button>
+  </div>`;
+  document.getElementById('tf-card').innerHTML = html;
+}
+function answerTF(v){ if(state.tf.ans[state.tf.i]===null){ state.tf.ans[state.tf.i]=v; renderTF(); } }
+function moveTF(d){
+  const n = state.tf.i + d;
+  if(n>=TF.length){ goTab('mc'); return; }
+  if(n<0) return;
+  state.tf.i = n; renderTF();
+}
+
+/* ============ 選擇題 ============ */
+function renderMC(){
+  const i = state.mc.i, item = MC[i];
+  document.getElementById('mc-count').textContent = `第 ${i+1} / ${MC.length} 題`;
+  document.getElementById('mc-bar').style.width = ((i)/MC.length*100)+'%';
+  const chosen = state.mc.ans[i];
+  const answered = chosen!==null;
+  const marks=['A','B','C','D'];
+  let html = `<div class="question"><div class="qnum">選擇 ${i+1}</div><div class="qtext">${item.q}</div></div>`;
+  html += `<div class="options">`;
+  item.o.forEach((o,idx)=>{
+    let cls='opt';
+    if(answered){
+      if(idx===item.a) cls+=' correct';
+      else if(idx===chosen) cls+=' wrong';
+    }
+    html += `<button class="${cls}" ${answered?'disabled':''} onclick="answerMC(${idx})"><span class="mk">${marks[idx]}</span><span>${o}</span></button>`;
+  });
+  html += `</div>`;
+  if(answered){
+    const ok = chosen===item.a;
+    html += `<div class="feedback show ${ok?'ok':'no'}"><b>${ok?'答對了！':'正解：'+marks[item.a]}</b>　${item.e}</div>`;
+  }
+  html += `<div class="qnav">
+    <button class="btn ghost" onclick="moveMC(-1)" ${i===0?'disabled':''}>上一題</button>
+    <button class="btn primary" onclick="moveMC(1)">${i===MC.length-1?'完成選擇 → 進入步驟排序':'下一題'}</button>
+  </div>`;
+  document.getElementById('mc-card').innerHTML = html;
+}
+function answerMC(idx){ if(state.mc.ans[state.mc.i]===null){ state.mc.ans[state.mc.i]=idx; renderMC(); } }
+function moveMC(d){
+  const n = state.mc.i + d;
+  if(n>=MC.length){ goTab('order'); return; }
+  if(n<0) return;
+  state.mc.i = n; renderMC();
+}
+
+/* ============ 步驟排序 ============ */
+let shuffled=[];
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function renderOrder(){
+  const s=state.order;
+  let html = `<div class="question"><div class="qnum">步驟排序</div>
+    <div class="qtext">請依正確順序，依序點選下方步驟（更換引流瓶）。</div></div>`;
+  // placed list
+  html += `<div class="hint">你的順序（點選可移除最後一項）：</div><div class="order-list">`;
+  if(s.placed.length===0){
+    html += `<div class="order-item" style="opacity:.55;cursor:default"><span class="seq">–</span><span>尚未選擇，請從下方依序點選</span></div>`;
+  }else{
+    s.placed.forEach((origIdx,pos)=>{
+      let cls='order-item placed';
+      if(s.checked){ cls = 'order-item ' + (origIdx===pos ? 'correct':'wrong'); }
+      const click = (!s.checked && pos===s.placed.length-1) ? `onclick="undoOrder()"` : '';
+      html += `<div class="${cls}" ${click}><span class="seq">${pos+1}</span><span>${ORDER[origIdx]}</span></div>`;
+    });
+  }
+  html += `</div>`;
+  // pool
+  if(!s.checked){
+    const remaining = ORDER.map((_,idx)=>idx).filter(idx=>!s.placed.includes(idx));
+    const remShuffled = shuffled.filter(idx=>remaining.includes(idx));
+    html += `<div class="hint">可選步驟：</div><div class="order-pool">`;
+    remShuffled.forEach(idx=>{
+      html += `<button class="order-item" onclick="placeOrder(${idx})"><span class="seq">+</span><span>${ORDER[idx]}</span></button>`;
+    });
+    html += `</div>`;
+  }
+  // controls / feedback
+  if(s.checked){
+    html += `<div class="feedback show ${s.correct===ORDER.length?'ok':'no'}">
+      <b>答對 ${s.correct} / ${ORDER.length} 個位置</b>　綠色為位置正確，紅色為位置錯誤。正確順序為：<br>${ORDER.map((t,n)=>`${n+1}. ${t}`).join('<br>')}
+    </div>
+    <div class="qnav"><button class="btn primary" onclick="resetOrder()">再試一次</button></div>`;
+  }else{
+    html += `<div class="qnav">
+      <button class="btn ghost" onclick="resetOrder()">清除</button>
+      <button class="btn primary" onclick="checkOrder()" ${s.placed.length!==ORDER.length?'disabled':''}>檢查順序</button>
+    </div>`;
+  }
+  document.getElementById('order-card').innerHTML = html;
+}
+function placeOrder(idx){ state.order.placed.push(idx); renderOrder(); }
+function undoOrder(){ state.order.placed.pop(); renderOrder(); }
+function checkOrder(){
+  const s=state.order;
+  s.correct = s.placed.reduce((acc,origIdx,pos)=>acc+(origIdx===pos?1:0),0);
+  s.checked = true; renderOrder();
+}
+function resetOrder(){ state.order={placed:[],checked:false,correct:0}; shuffled=shuffle(ORDER.map((_,i)=>i)); renderOrder(); }
+
+/* ============ 成績 ============ */
+function goTab(tab){
+  document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active', x.dataset.tab===tab));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('show'));
+  document.getElementById('tab-'+tab).classList.add('show');
+  if(tab==='result') renderResult();
+  if(tab==='rank') renderLeaderboard();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function score(arr, bank){ return arr.reduce((a,v,i)=>a+(v!==null&&v===bank[i].a?1:0),0); }
+function renderResult(){
+  const tfS = score(state.tf.ans, TF);
+  const mcS = score(state.mc.ans, MC);
+  const ordS = state.order.checked ? state.order.correct : 0;
+  const total = tfS+mcS+ordS;
+  const max = TF.length+MC.length+ORDER.length;
+  const pct = Math.round(total/max*100);
+  let grade = pct>=90?'優異 · 觀念扎實':pct>=75?'良好 · 再複習細節':pct>=60?'及格 · 建議重讀教學':'再加油 · 回教學區複習';
+
+  // best score (localStorage, graceful)
+  let best=null;
+  try{
+    const prev = parseInt(localStorage.getItem('cdrain_best')||'-1');
+    if(pct>prev){ localStorage.setItem('cdrain_best', pct); best=pct; }
+    else best=prev;
+  }catch(e){ best=null; }
+
+  const r=72, c=2*Math.PI*r, off=c*(1-pct/100);
+  let html = `
+    <svg class="score-ring" width="170" height="170" viewBox="0 0 170 170">
+      <circle cx="85" cy="85" r="${r}" fill="none" stroke="var(--sand-2)" stroke-width="14"/>
+      <circle cx="85" cy="85" r="${r}" fill="none" stroke="var(--terra)" stroke-width="14"
+        stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${off}"
+        transform="rotate(-90 85 85)"/>
+      <text x="85" y="80" text-anchor="middle" font-size="34" font-weight="800" fill="var(--ink)">${pct}%</text>
+      <text x="85" y="104" text-anchor="middle" font-size="13" fill="var(--ink-soft)">${total} / ${max}</text>
+    </svg>
+    <h2>${grade}</h2>
+    <div class="breakdown">
+      <div><div class="n" style="color:var(--terra)">${tfS}/${TF.length}</div><div class="l">是非題</div></div>
+      <div><div class="n" style="color:var(--ochre)">${mcS}/${MC.length}</div><div class="l">選擇題</div></div>
+      <div><div class="n" style="color:var(--sage-deep)">${state.order.checked?ordS+'/'+ORDER.length:'未作答'}</div><div class="l">步驟排序</div></div>
+    </div>`;
+  if(best!==null) html += `<div class="best">★ 個人歷史最佳：${best}%</div>`;
+
+  // 登錄到單位排行榜
+  window._lastResult = {tfS, mcS, ordS, total, max, pct};
+  if(!fbConfigured()){
+    html += `<div class="note" style="text-align:left;margin-top:18px">尚未設定 Firebase，排行榜未啟用。請在程式碼最上方填入 nursework 的 firebaseConfig。</div>`;
+  } else if(scoreSubmitted){
+    html += `<div class="submitwrap"><h3>已登錄到排行榜 ✓</h3>
+      <button class="btn primary" style="width:100%" onclick="goTab('rank')">查看排行榜</button></div>`;
+  } else {
+    html += `<div class="submitwrap">
+      <h3>登錄到單位排行榜</h3>
+      <div class="field">
+        <input id="in-name" placeholder="姓名 / 員編" autocomplete="off">
+        <input id="in-unit" placeholder="單位（如 5A、ICU）" autocomplete="off">
+      </div>
+      <button class="btn primary" style="width:100%" onclick="submitScore()">送出成績</button>
+      <div id="submit-msg" class="msg"></div>
+    </div>`;
+  }
+
+  html += `<div class="qnav" style="max-width:360px;margin:18px auto 0">
+      <button class="btn ghost" onclick="restartAll()">重新測驗</button>
+      <button class="btn primary" onclick="goTab('learn')">回教學區</button>
+    </div>`;
+  document.getElementById('result-card').innerHTML = html;
+}
+
+let scoreSubmitted = false, lastName = "", lastUnit = "";
+async function submitScore(){
+  const name = (document.getElementById('in-name').value||'').trim();
+  const unit = (document.getElementById('in-unit').value||'').trim();
+  const msg = document.getElementById('submit-msg');
+  if(!name){ msg.className='msg no'; msg.textContent='請先輸入姓名 / 員編。'; return; }
+  if(!fbReady){ msg.className='msg no'; msg.textContent='Firebase 尚未就緒，請確認設定與網路。'; return; }
+  const r = window._lastResult;
+  lastName = name; lastUnit = unit||'(未填)';
+  msg.className='msg'; msg.textContent='送出中…';
+  try{
+    await db.collection(SCORE_COLLECTION).add({
+      name, unit: lastUnit,
+      pct: r.pct, total: r.total, max: r.max,
+      tf: r.tfS, mc: r.mcS, ord: r.ordS,
+      ts: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    scoreSubmitted = true;
+    renderResult();
+    goTab('rank');
+  }catch(e){
+    msg.className='msg no';
+    msg.textContent='送出失敗：'+(e.message||e)+'（請檢查 Firestore 安全規則）';
+  }
+}
+async function renderLeaderboard(){
+  const card = document.getElementById('rank-card');
+  if(!fbConfigured()){
+    card.innerHTML = `<h2><span class="dot ochre">榜</span>單位排行榜</h2>
+      <div class="note">尚未設定 Firebase。請在程式碼最上方填入 nursework 的 firebaseConfig 後，重新整理頁面即可啟用。</div>`;
+    return;
+  }
+  card.innerHTML = `<h2><span class="dot ochre">榜</span>單位排行榜</h2><p class="lead">讀取中…</p>`;
+  try{
+    const snap = await db.collection(SCORE_COLLECTION).orderBy('pct','desc').limit(100).get();
+    let rows = []; snap.forEach(d=>rows.push(d.data()));
+    rows.sort((a,b)=> b.pct-a.pct || (b.total||0)-(a.total||0) || ((a.ts?.seconds||0)-(b.ts?.seconds||0)));
+    if(rows.length===0){
+      card.innerHTML = `<h2><span class="dot ochre">榜</span>單位排行榜</h2>
+        <div class="note">還沒有成績紀錄。完成測驗後在「成績」頁登錄即可。</div>`;
+      return;
+    }
+    let html = `<h2><span class="dot ochre">榜</span>單位排行榜</h2><p class="lead">共 ${rows.length} 筆，依正確率排序</p>`;
+    html += `<div class="lb"><div class="lb-row lb-head"><span class="rk">名次</span><span class="nm">姓名</span><span class="ut">單位</span><span class="sc">成績</span></div>`;
+    rows.forEach((r,i)=>{
+      const medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1);
+      const mine = (r.name===lastName && r.unit===lastUnit) ? ' me' : '';
+      html += `<div class="lb-row${mine}">
+        <span class="rk">${medal}</span>
+        <span class="nm">${esc(r.name)}</span>
+        <span class="ut">${esc(r.unit||'')}</span>
+        <span class="sc">${r.pct}% <small>(${r.total}/${r.max})</small></span>
+      </div>`;
+    });
+    html += `</div><div class="qnav" style="margin-top:16px">
+      <button class="btn ghost" onclick="renderLeaderboard()">重新整理</button></div>`;
+    card.innerHTML = html;
+  }catch(e){
+    card.innerHTML = `<h2><span class="dot ochre">榜</span>單位排行榜</h2>
+      <div class="note">讀取失敗：${esc(e.message||String(e))}<br>請確認 Firestore 安全規則允許讀取「${SCORE_COLLECTION}」。</div>`;
+  }
+}
+function restartAll(){
+  state.tf={i:0,ans:Array(TF.length).fill(null)};
+  state.mc={i:0,ans:Array(MC.length).fill(null)};
+  state.order={placed:[],checked:false,correct:0};
+  scoreSubmitted=false;
+  shuffled=shuffle(ORDER.map((_,i)=>i));
+  renderTF(); renderMC(); renderOrder();
+  goTab('tf');
+}
+
+/* ============ 初始化 ============ */
+shuffled=shuffle(ORDER.map((_,i)=>i));
+renderTF(); renderMC(); renderOrder();
+</script>
+</body>
+</html>
